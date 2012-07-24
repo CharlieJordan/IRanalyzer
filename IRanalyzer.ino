@@ -22,6 +22,8 @@ unsigned int TimerValue[SAMPLE_SIZE];
 char direction[SAMPLE_SIZE];
 byte change_count;
 long time;
+long last;
+long elapsed;
 
 void setup() {
   Serial.begin(9600);
@@ -56,19 +58,24 @@ void loop()
     }
   }
   Serial.println("Bit stream detected!");
+  Serial.println(" cummulative\telapsed\tbit-value");
   change_count = 0;
+  last = 0;
   time = (long) TimerValue[change_count] * 4;
-  Serial.print(time);
-  Serial.print("\t");
-  Serial.println(direction[change_count++]);
-  while (change_count < SAMPLE_SIZE) {
-    time = (long) TimerValue[change_count] * 4;
+  while (change_count < SAMPLE_SIZE-1) {
+    time = (long) TimerValue[++change_count] * 4;
+    elapsed = time - last;
+    Serial.print("\t");
     Serial.print(time);
     Serial.print("\t");
-    Serial.println(direction[change_count-1]);
-    Serial.print(time);
+    Serial.print(elapsed);
     Serial.print("\t");
-    Serial.println(direction[change_count++]);    
+    if( elapsed < 400 ) Serial.print("error - interval less than 400 microseconds!");
+    else if( elapsed >= 400 && elapsed <= 800 ) Serial.print("0");
+    else if( elapsed >= 1000 && elapsed <= 1400 ) Serial.print("1");
+    else if( elapsed > 1600 && elapsed < 3000) Serial.print("Probably a start bit.");
+    Serial.println();
+    last = time;
   }
   Serial.println("Bit stream end!");
   delay(2000);
