@@ -6,7 +6,9 @@
  *  Started.... 18 May 2007 
  *  Updated.... 18 May 2007 
  * 
- *
+ *  Version 2.0 - 24 July 2012
+ *       - changed displayed values ( added elapsed time, included bit guess, etc... )
+ *       - Charlie Jordan
  */ 
 #include <avr/interrupt.h>
 #include <avr/io.h>
