@@ -9,11 +9,14 @@
  *  Version 2.0 - 24 July 2012
  *       - changed displayed values ( added elapsed time, included bit guess, etc... )
  *       - Charlie Jordan
- */ 
+ *      
+ *      26 July 2012
+ *      - 
+ */
 #include <avr/interrupt.h>
 #include <avr/io.h>
 
-#include <myIR.h>
+#include "myIR.h"
 
 
 #define TIMER_RESET  TCNT1 = 0
